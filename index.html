@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Browser Bridge · 让你的浏览器成为任何 Agent 的工具</title>
+<meta name="description" content="Browser Bridge 把你本地的 Chrome 变成任何 AI Agent 即插即用的工具。CLI / MCP / Claude Code skill 任意入口，会话与凭证留在本机。开源，MIT。">
+<meta property="og:title" content="Browser Bridge">
+<meta property="og:description" content="让你的浏览器，成为任何 Agent 的工具。">
+<meta property="og:type" content="website">
+<link rel="icon" href="assets/logo-white.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-i18n="skip">跳到主要内容</a>
+
+<header class="topbar">
+  <div class="shell topbar-inner">
+    <a class="brand" href="#top">
+      <img src="assets/logo-white.png" alt="" width="26" height="26">
+      <span class="brand-name">BROWSER BRIDGE</span>
+    </a>
+    <nav class="topnav" aria-label="主导航">
+      <a href="#token" data-i18n="nav_token">Token 效率</a>
+      <a href="#memory" data-i18n="nav_memory">站点记忆</a>
+      <a href="#safety" data-i18n="nav_safety">安全审核</a>
+      <a href="#entry" data-i18n="nav_entry">接入方式</a>
+    </nav>
+    <div class="topbar-tools">
+      <div class="lang" role="group" aria-label="语言切换">
+        <button type="button" class="lang-btn is-active" data-set-lang="zh">中文</button>
+        <span class="lang-sep" aria-hidden="true"></span>
+        <button type="button" class="lang-btn" data-set-lang="en">EN</button>
+      </div>
+      <a class="gh-link" href="https://github.com/dkisser/browser-bridge" target="_blank" rel="noopener">
+        GitHub
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg>
+      </a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ================= 首屏 ================= -->
+  <section class="hero" id="top">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-mark" aria-hidden="true">
+      <img src="assets/logo-white.png" alt="" width="760" height="760">
+    </div>
+    <div class="vignette" aria-hidden="true"></div>
+
+    <div class="shell hero-grid">
+      <div class="hero-copy">
+        <p class="kicker">
+          <span class="kicker-dot" aria-hidden="true"></span>
+          <span data-i18n="hero_kicker">开源 · MIT · 只在本机运行</span>
+        </p>
+        <h1 class="hero-title" data-i18n="hero_title">让你的浏览器，<br>成为任何 Agent 的工具</h1>
+        <p class="hero-sub" data-i18n="hero_sub">一条 bridge 协议，CLI / MCP / Skill 任意入口——装上 Skill，你正在用的 Agent 就能开浏览器。免云浏览器、免重新登录，会话与凭证留在本机。</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="https://github.com/dkisser/browser-bridge" target="_blank" rel="noopener" data-i18n="hero_cta">在 GitHub 上查看</a>
+          <a class="btn btn-ghost" href="#install" data-i18n="hero_cta2">安装方式</a>
+        </div>
+      </div>
+
+      <figure class="hero-frame">
+        <figcaption class="frame-cap">
+          <span class="frame-cap-l">
+            <span class="rec" aria-hidden="true"></span>
+            <span data-i18n="hero_cap">Agent 操作 Chrome</span>
+          </span>
+        </figcaption>
+        <div class="frame">
+          <span class="corner c-tl" aria-hidden="true"></span>
+          <span class="corner c-tr" aria-hidden="true"></span>
+          <span class="corner c-bl" aria-hidden="true"></span>
+          <span class="corner c-br" aria-hidden="true"></span>
+          <img id="hero-demo" src="assets/recording.gif" data-poster="assets/email-demo-mid.png"
+               alt="Agent 通过 Browser Bridge 打开 Gmail 并读取收件箱的画面" width="720" height="406">
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ================= 支柱一：Token 效率 ================= -->
+  <section class="pillar" id="token">
+    <div class="shell pillar-grid">
+      <div class="pillar-label">
+        <span class="pillar-index">01</span>
+        <span class="pillar-name" data-i18n="p1_name">Token 效率</span>
+      </div>
+      <div class="pillar-body">
+        <h2 class="pillar-title" data-i18n="p1_title">整页 324,078 字符，Agent 只读 546 个。</h2>
+        <p class="pillar-text" data-i18n="p1_text">snapshot 先给出一份页面地图：有哪些可点的元素、哪些标题、正文大概在哪。Agent 据此只读需要的那一块，而不是把整页塞进上下文。超限的结果会被拒绝，不浪费 token。</p>
+
+        <div class="ratio">
+          <span class="ratio-num"><span class="ratio-pre">1:</span><span class="ratio-core">594</span></span>
+          <span class="ratio-note">
+            <span class="ratio-note-l1" data-i18n="p1_ratio1">信噪比</span>
+            <span class="ratio-note-l2" data-i18n="p1_ratio2">GMAIL 收件箱 · 登录态 CHROME<br>2026-09-15 实测</span>
+          </span>
+        </div>
+
+        <table class="data-table">
+          <caption class="visually-hidden" data-i18n="p1_table_cap">三个真实页面的信噪比实测</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-i18n="p1_th1">页面</th>
+              <th scope="col" class="num" data-i18n="p1_th2">整页 HTML</th>
+              <th scope="col" class="num" data-i18n="p1_th3">实际信号</th>
+              <th scope="col" class="num" data-i18n="p1_th4">信噪比</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-i18n="p1_row1">Gmail 收件箱</td>
+              <td class="num">324,078</td><td class="num">546</td><td class="num strong">1:594</td>
+            </tr>
+            <tr>
+              <td data-i18n="p1_row2">GitHub 通知</td>
+              <td class="num">303,176</td><td class="num">364</td><td class="num strong">1:833</td>
+            </tr>
+            <tr>
+              <td data-i18n="p1_row3">Eastmoney 文章</td>
+              <td class="num">169,318</td><td class="num">2,318</td><td class="num strong">1:73</td>
+            </tr>
+          </tbody>
+        </table>
+        <p class="data-foot" data-i18n="p1_foot">按字符数统计，2026-09-15 实测。snapshot 是每次读取前的那份页面地图，本身要花 3–8K 字符。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 支柱二：站点记忆 ================= -->
+  <section class="pillar" id="memory">
+    <div class="shell pillar-grid">
+      <div class="pillar-label">
+        <span class="pillar-index">02</span>
+        <span class="pillar-name" data-i18n="p2_name">站点记忆</span>
+      </div>
+      <div class="pillar-body">
+        <h2 class="pillar-title" data-i18n="p2_title">越用越聪明。</h2>
+        <p class="pillar-text" data-i18n="p2_text">你在哪个站点操作过，它就记住哪个站点：哪些步骤失败过、正文在哪个位置、哪条路径走得通。下次 Agent 回到同一个站点，这些经验直接跟着一起过去——不用再从头摸索一遍。</p>
+
+        <figure class="terminal">
+          <figcaption class="terminal-cap">
+            <span data-i18n="p2_cap">bridge memory show mail.example.com</span>
+          </figcaption>
+          <pre class="terminal-body"><code>[learned site patterns] mail.example.com
+Observed to fail here (do not repeat):
+  - element_not_found on gettext with "[data-message-subject=\"…\"]" (4x)
+
+Site map (checked against this page):
+  - text container · list [Inbox] → @e12 (6x)
+  - text container · toolbar [Mailbox actions] → @e7 (6x)</code></pre>
+        </figure>
+
+        <ul class="privacy-list">
+          <li data-i18n="p2_p1">记住的是页面的形状，不是你看过的东西。</li>
+          <li data-i18n="p2_p2">存在你本机，不上传。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 支柱三：安全审核 ================= -->
+  <section class="pillar" id="safety">
+    <div class="shell pillar-grid">
+      <div class="pillar-label">
+        <span class="pillar-index">03</span>
+        <span class="pillar-name" data-i18n="p3_name">安全审核</span>
+      </div>
+      <div class="pillar-body shot-grid">
+        <div class="shot-copy">
+          <h2 class="pillar-title" data-i18n="p3_title">Agent 做的每一件事，都要过你这一关。</h2>
+          <p class="pillar-text" data-i18n="p3_text">Agent 想去没批准的站点、想填密码或信用卡、想提交表单，都会先停下来问你。你说了算：只放行这一次、以后都信任，还是拒绝。</p>
+          <p class="pillar-text" data-i18n="p3_text2">审批在侧边栏排成一队，不打断你手上的事。</p>
+          <ul class="privacy-list">
+            <li data-i18n="p3_l1">站点只批一次，之后就不再问。</li>
+            <li data-i18n="p3_l2">想接管随时按一下开关，Agent 立刻停手。</li>
+            <li data-i18n="p3_l3">不装云浏览器，用的就是你日常那个浏览器。</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <figcaption class="shot-cap">
+            <span data-i18n="p3_cap">扩展侧边栏 · 审批队列</span>
+          </figcaption>
+          <div class="shot-frame">
+            <span class="corner c-tl" aria-hidden="true"></span>
+            <span class="corner c-tr" aria-hidden="true"></span>
+            <span class="corner c-bl" aria-hidden="true"></span>
+            <span class="corner c-br" aria-hidden="true"></span>
+            <img src="assets/sidebar.png" alt="Browser Bridge 扩展侧边栏示意：Takeover 开关与 Approvals 审批队列" loading="lazy" width="814" height="1051">
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 接入方式 ================= -->
+  <section class="pillar" id="entry">
+    <div class="shell pillar-grid">
+      <div class="pillar-label">
+        <span class="pillar-name" data-i18n="p4_name">接入方式</span>
+      </div>
+      <div class="pillar-body">
+        <h2 class="pillar-title" data-i18n="p4_title">CLI / MCP / Skill，任意入口。</h2>
+        <p class="pillar-text" data-i18n="p4_text">在终端里直接调，接到支持 MCP 的客户端，或者装一个 Skill 让你的 Agent 学会开浏览器——挑你顺手的那个。</p>
+
+        <div class="entries">
+          <div class="entry">
+            <h3 class="entry-name">CLI</h3>
+            <p class="entry-text" data-i18n="p4_e1">终端里直接用，开标签页、点按钮、读页面，一整套命令。</p>
+          </div>
+          <span class="entry-sep" aria-hidden="true"></span>
+          <div class="entry">
+            <h3 class="entry-name">MCP</h3>
+            <p class="entry-text" data-i18n="p4_e2">Claude Desktop、Cursor、Codex 这些客户端，填一段配置就能连上。</p>
+          </div>
+          <span class="entry-sep" aria-hidden="true"></span>
+          <div class="entry">
+            <h3 class="entry-name">Skill</h3>
+            <p class="entry-text" data-i18n="p4_e3">装上 Skill，你正在用的 Agent 就有了开浏览器的能力。</p>
+          </div>
+        </div>
+
+        <pre class="code-block" data-lang-block="zh"><code>bridge browser:list
+bridge --browser &lt;browser-id&gt; tab:new https://github.com
+bridge --browser &lt;browser-id&gt; --tab &lt;tab-id&gt; wait:navigation
+bridge memory show mail.example.com</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 收尾 + 安装 ================= -->
+  <section class="final" id="install">
+    <div class="shell final-inner">
+      <img class="final-logo" src="assets/logo-white.png" alt="Browser Bridge" width="72" height="72" loading="lazy">
+      <h2 class="final-title" data-i18n="final_title">现在开始，为 Agent 连接你的浏览器</h2>
+
+      <div class="install-cmd">
+        <code id="install-cmd-text">curl -fsSL https://github.com/dkisser/browser-bridge/releases/latest/download/install.sh | bash</code>
+        <button type="button" class="copy-btn" id="copy-btn" aria-live="polite">
+          <span class="copy-label" data-copy-label data-i18n="copy_idle">复制</span>
+        </button>
+      </div>
+      <p class="final-note" data-i18n="final_note">装好后，在 Chrome 里把 ~/Browser-Bridge/extension/ 作为解压缩的扩展加载。需要 Chrome 114 或更高版本。</p>
+
+      <a class="final-link" href="https://github.com/dkisser/browser-bridge" target="_blank" rel="noopener">
+        github.com/dkisser/browser-bridge
+      </a>
+      <p class="final-meta">
+        <span>MIT License</span>
+        <span class="final-dot" aria-hidden="true"></span>
+        <span data-i18n="final_meta2">Chrome 114+</span>
+        <span class="final-dot" aria-hidden="true"></span>
+        <span data-i18n="final_meta3">Go · TypeScript</span>
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
